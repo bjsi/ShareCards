@@ -1,3 +1,3 @@
 # Share Cards
 
-Simple React App to share SuperMemo flashcard decks.
+React App for sharing SuperMemo flashcard decks.
