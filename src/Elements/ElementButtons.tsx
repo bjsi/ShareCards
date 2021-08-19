@@ -48,23 +48,27 @@ export interface IElementButtonsProps {
   displayState: DisplayState;
 }
 
-export const ElementButtons = ({
-  onTestRepClick,
-  onShowAnswerClick,
-  onGradeClick,
-  onCancelAnswerClick,
-  displayState,
-}: IElementButtonsProps) => {
-  let button;
-  if (displayState === DisplayState.Browsing) {
-    button = TestRepetitionButton({ onClick: onTestRepClick });
-  } else if (displayState === DisplayState.Question) {
-    button = ShowAnswerButtons({
-      onShowAnswerClick: onShowAnswerClick,
-      onCancelAnswerClick: onCancelAnswerClick,
-    });
-  } else if (displayState === DisplayState.Grading) {
-    button = GradeButtons({ onClick: onGradeClick });
+const createElementButtons = (props: IElementButtonsProps) => {
+  switch (props.displayState) {
+    case DisplayState.Browsing:
+      return <TestRepetitionButton onClick={props.onTestRepClick} />;
+    case DisplayState.Question:
+      return (
+        <ShowAnswerButtons
+          onCancelAnswerClick={props.onCancelAnswerClick}
+          onShowAnswerClick={props.onShowAnswerClick}
+        />
+      );
+    case DisplayState.Grading:
+      return <GradeButtons onClick={props.onGradeClick} />;
+
+    default:
+      throw new Error(
+        "Failed to create element buttons: Unexpected display state.",
+      );
   }
-  return <>{button}</>;
+};
+
+export const ElementButtons = (props: IElementButtonsProps) => {
+  return <>{createElementButtons(props)}</>;
 };
