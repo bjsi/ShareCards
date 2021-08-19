@@ -13,10 +13,19 @@ const TestRepetitionButton = ({ onClick }: IElementButtonProps) => {
   );
 };
 
-const ShowAnswerButton = ({ onClick }: IElementButtonProps) => {
+interface IShowAnswerButtonsProps {
+  onCancelAnswerClick: () => void;
+  onShowAnswerClick: () => void;
+}
+
+const ShowAnswerButtons = ({
+  onCancelAnswerClick,
+  onShowAnswerClick,
+}: IShowAnswerButtonsProps) => {
   return (
     <>
-      <Button onClick={onClick}>Show Answer</Button>
+      <Button onClick={onShowAnswerClick}>Show Answer</Button>
+      <Button onClick={onCancelAnswerClick}>Cancel</Button>
     </>
   );
 };
@@ -34,6 +43,7 @@ const GradeButtons = ({ onClick }: IElementButtonProps) => {
 export interface IElementButtonsProps {
   onTestRepClick: () => void;
   onShowAnswerClick: () => void;
+  onCancelAnswerClick: () => void;
   onGradeClick: () => void;
   displayState: DisplayState;
 }
@@ -42,13 +52,17 @@ export const ElementButtons = ({
   onTestRepClick,
   onShowAnswerClick,
   onGradeClick,
+  onCancelAnswerClick,
   displayState,
 }: IElementButtonsProps) => {
   let button;
   if (displayState === DisplayState.Browsing) {
     button = TestRepetitionButton({ onClick: onTestRepClick });
   } else if (displayState === DisplayState.Question) {
-    button = ShowAnswerButton({ onClick: onShowAnswerClick });
+    button = ShowAnswerButtons({
+      onShowAnswerClick: onShowAnswerClick,
+      onCancelAnswerClick: onCancelAnswerClick,
+    });
   } else if (displayState === DisplayState.Grading) {
     button = GradeButtons({ onClick: onGradeClick });
   }

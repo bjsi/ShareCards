@@ -19,14 +19,17 @@ const createComponentFromData = (
 ): JSX.Element => {
   switch (data.type) {
     case ComponentType.Html:
-      return HtmlComponent({ ...(data as HtmlData), displayState });
+      return (
+        <HtmlComponent {...(data as HtmlData)} displayState={displayState} />
+      );
     case ComponentType.Image:
-      return ImageComponent({ ...(data as ImageData), displayState });
+      return (
+        <ImageComponent {...(data as ImageData)} displayState={displayState} />
+      );
     case ComponentType.Sound:
-      return SoundComponent({
-        ...(data as SoundData),
-        displayState,
-      });
+      return (
+        <SoundComponent {...(data as SoundData)} displayState={displayState} />
+      );
     default:
       throw new Error("Failed to create component: Unexpected ComponentType.");
   }
@@ -36,22 +39,24 @@ const Element = ({ components }: ElementData) => {
   const [displayState, setDisplayState] = R.useState<DisplayState>(
     DisplayState.Browsing,
   );
-  const callbacks: IElementButtonsProps = {
+
+  const btnProps: IElementButtonsProps = {
     onGradeClick: () => setDisplayState(DisplayState.Browsing),
     onShowAnswerClick: () => setDisplayState(DisplayState.Grading),
+    onCancelAnswerClick: () => setDisplayState(DisplayState.Browsing),
     onTestRepClick: () => setDisplayState(DisplayState.Question),
     displayState: displayState,
   };
 
-  const displayedComponents = components
+  const toDisplay = components
     .filter(c => c.displayAt & displayState)
     .map(createComponentFromData);
 
   return (
-    <div>
-      {displayedComponents}
-      {ElementButtons(callbacks)}
-    </div>
+    <>
+      <div>{toDisplay}</div>
+      <div>{ElementButtons(btnProps)}</div>
+    </>
   );
 };
 

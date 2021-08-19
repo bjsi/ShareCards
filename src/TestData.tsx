@@ -16,6 +16,7 @@ export interface ImageData extends CompData {
 }
 
 export interface SoundData extends CompData {
+  text: string;
   src: string;
   playAt: PlayAt;
 }
@@ -29,6 +30,9 @@ export interface ElementData {
 
 export const data: ElementData[] = [
   {
+    //
+    // Simple Html QA
+
     components: [
       {
         type: ComponentType.Html,
@@ -43,20 +47,9 @@ export const data: ElementData[] = [
     ],
   },
   {
-    components: [
-      {
-        type: ComponentType.Html,
-        displayAt: DisplayAt.All,
-        text: "What is the capital of China?",
-      },
-      {
-        type: ComponentType.Html,
-        displayAt: DisplayAt.NonQuestion,
-        text: "Shanghai",
-      },
-    ],
-  },
-  {
+    //
+    // QA with Image
+
     components: [
       {
         type: ComponentType.Html,
@@ -72,6 +65,35 @@ export const data: ElementData[] = [
         type: ComponentType.Html,
         displayAt: DisplayAt.NonQuestion,
         text: "London",
+      },
+    ],
+  },
+  {
+    //
+    // Audio Cloze
+
+    components: [
+      {
+        type: ComponentType.Html,
+        displayAt: DisplayAt.All,
+        text: "Fill in the gap:",
+      },
+      {
+        type: ComponentType.Html,
+        displayAt: DisplayAt.NonQuestion,
+        text: "the answer",
+      },
+      {
+        type: ComponentType.Sound,
+        displayAt: DisplayAt.All,
+        text: "Audio Cloze Question",
+        playAt: PlayAt.Question,
+      },
+      {
+        type: ComponentType.Sound,
+        displayAt: DisplayAt.NonQuestion,
+        playAt: PlayAt.Answer,
+        text: "Audio Cloze Answer",
       },
     ],
   },
