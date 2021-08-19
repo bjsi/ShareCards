@@ -1,4 +1,4 @@
-import DisplayAt from './Components/Base/DisplayAt';
+import DisplayAt from "./Components/Base/DisplayAt";
 
 interface IComponentData {
   displayAt: DisplayAt;
@@ -18,12 +18,12 @@ export const data: ElementData[] = [
   {
     components: [
       {
-        displayAt: DisplayAt.Question,
-        text: 'What is the capital of England?',
+        displayAt: DisplayAt.All,
+        text: "What is the capital of England?",
       },
       {
-        displayAt: DisplayAt.Answer,
-        text: 'London',
+        displayAt: DisplayAt.NonQuestion,
+        text: "London",
       },
     ],
   },
