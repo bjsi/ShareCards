@@ -1,8 +1,8 @@
-import { data } from "./TestData";
-import Element from "./Elements/Element";
+import { elData } from "./TestData";
+import ElementContainer from "./Elements/Element";
 
 function App() {
-  return <div className="App">{data.map(d => Element(d))}</div>;
+  return <div className="App">{elData.map(d => ElementContainer(d))}</div>;
 }
 
 export default App;

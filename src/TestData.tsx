@@ -23,16 +23,23 @@ export interface SoundData extends CompData {
 
 export type SomeCompData = HtmlData | ImageData | SoundData;
 
+export type Template =
+  | "Item"
+  | "Item Picture"
+  | "Audio Cloze Item"
+  | "Audio Cloze Item Picture";
+
 export interface ElementData {
-  template?: string;
+  template: Template;
   components: SomeCompData[];
 }
 
-export const data: ElementData[] = [
+export const elData: ElementData[] = [
   {
     //
     // Simple Html QA
 
+    template: "Item",
     components: [
       {
         type: ComponentType.Html,
@@ -50,6 +57,7 @@ export const data: ElementData[] = [
     //
     // QA with Image
 
+    template: "Item Picture",
     components: [
       {
         type: ComponentType.Html,
@@ -72,6 +80,7 @@ export const data: ElementData[] = [
     //
     // Audio Cloze
 
+    template: "Audio Cloze Item",
     components: [
       {
         type: ComponentType.Html,

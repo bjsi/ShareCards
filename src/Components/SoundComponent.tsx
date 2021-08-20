@@ -1,4 +1,5 @@
 import IComponentProps from "./Base/IComponentProps";
+import DisplayState from "../Elements/Base/DisplayState";
 import * as R from "react";
 import PlayAt from "./Base/PlayAt";
 import Button from "../Elements/Base/Button";
@@ -22,15 +23,20 @@ const ToggleButton = ({ playing, onClick }: ISoundButtonProps) => {
   );
 };
 
-export function SoundComponent({ text }: ISoundComponentProps): JSX.Element {
-  const [playing, setPlayState] = R.useState(false);
-  const toggleClick = () => setPlayState(!playing);
+export function SoundComponent({
+  text,
+  displayState,
+}: ISoundComponentProps): JSX.Element {
+  const [playing, setPlayState] = R.useState(
+    displayState === DisplayState.Question,
+  );
+  const togglePlay = () => setPlayState(!playing);
   return (
     <>
       <div>{text}</div>
       <div>-[{playing ? "PLAY" : "STOP"}]---------</div>
       <div>
-        <ToggleButton playing={playing} onClick={toggleClick} />
+        <ToggleButton playing={playing} onClick={togglePlay} />
       </div>
     </>
   );

@@ -11,6 +11,7 @@ import {
   HtmlData,
   ImageData,
   SoundData,
+  Template,
 } from "../TestData";
 
 const createComponentFromData = (
@@ -35,7 +36,90 @@ const createComponentFromData = (
   }
 };
 
-const Element = ({ components }: ElementData) => {
+interface IElementProps {
+  comps: SomeCompData[];
+  displayState: DisplayState;
+}
+
+function ItemPictureElement({
+  comps,
+  displayState,
+}: IElementProps): JSX.Element {
+  if (comps.length !== 3) throw new Error("Unexpected number of components");
+
+  return (
+    <>
+      <div className="grid grid-cols-2">
+        <div>{createComponentFromData(comps[0], displayState)}</div>
+        <div>{createComponentFromData(comps[1], displayState)}</div>
+      </div>
+      <div className="grid grid-cols-1">
+        <div>{createComponentFromData(comps[2], displayState)}</div>
+      </div>
+    </>
+  );
+}
+
+function AudioClozeElement({
+  comps,
+  displayState,
+}: IElementProps): JSX.Element {
+  if (comps.length !== 4) throw new Error("Unexpected number of components");
+
+  return (
+    <>
+      <div className="grid grid-rows-3">
+        <div>{createComponentFromData(comps[0], displayState)}</div>
+
+        <div>{createComponentFromData(comps[1], displayState)}</div>
+
+        <div className="grid grid-cols-2">
+          <div>{createComponentFromData(comps[2], displayState)}</div>
+          <div>{createComponentFromData(comps[3], displayState)}</div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function AudioClozePictureElement({
+  comps,
+  displayState,
+}: IElementProps): JSX.Element {
+  if (comps.length !== 5) throw new Error("Unexpected number of components");
+
+  return (
+    <>
+      <div className="grid grid-cols=2">
+        <div className="grid grid-rows=3">
+          {createComponentFromData(comps[0], displayState)}
+        </div>
+        <div>{createComponentFromData(comps[1], displayState)}</div>
+      </div>
+    </>
+  );
+}
+
+const ItemElement = ({ comps, displayState }: IElementProps): JSX.Element => {
+  if (comps.length !== 2) throw new Error("Unexpected number of components");
+
+  return (
+    <>
+      <div className="grid grid-rows-2">
+        <div>
+          {comps[0].displayAt & displayState &&
+            createComponentFromData(comps[0], displayState)}
+        </div>
+        <div>
+          {comps[1].displayAt & displayState &&
+            createComponentFromData(comps[1], displayState)}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const ElementContainer = ({ components, template }: ElementData) => {
   const [displayState, setDisplayState] = R.useState<DisplayState>(
     DisplayState.Browsing,
   );
@@ -48,16 +132,36 @@ const Element = ({ components }: ElementData) => {
     displayState: displayState,
   };
 
-  const toDisplay = components
-    .filter(c => c.displayAt & displayState)
-    .map(createComponentFromData);
+  let element: JSX.Element;
+  if (template === "Item") {
+    element = <ItemElement comps={components} displayState={displayState} />;
+  } else if (template === "Item Picture") {
+    element = (
+      <ItemPictureElement comps={components} displayState={displayState} />
+    );
+  } else if (template === "Audio Cloze Item") {
+    element = (
+      <AudioClozeElement comps={components} displayState={displayState} />
+    );
+  } else if (template === "Audio Cloze Item Picture") {
+    element = (
+      <AudioClozePictureElement
+        comps={components}
+        displayState={displayState}
+      />
+    );
+  } else {
+    throw new Error("Unexpected template");
+  }
 
   return (
     <>
-      <div>{toDisplay}</div>
-      <div>{ElementButtons(btnProps)}</div>
+      <div>{element}</div>
+      <div>
+        <ElementButtons {...btnProps} />
+      </div>
     </>
   );
 };
 
-export default Element;
+export default ElementContainer;
