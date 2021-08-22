@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -18,7 +22,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "build:tailwind": "tailwindcss build src/tailwind.css -o src/index.css",
     "prestart": "npm run build:tailwind",
     "prebuild": "npm run build:tailwind",
     "start": "react-scripts start",
@@ -62,7 +66,7 @@
       "eslint --fix",
       "git add"
     ],
-    "*.{html,css,less,ejs}": [
+    "*.{html,less,ejs}": [
       "prettier --write",
       "git add"
     ],

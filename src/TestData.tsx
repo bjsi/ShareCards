@@ -1,10 +1,12 @@
-import DisplayAt from "./Components/Base/DisplayAt";
-import PlayAt from "./Components/Base/PlayAt";
-import { ComponentType } from "./Components/Base/ComponentType";
+import DisplayAt from "./SuperMemo/Components/Base/DisplayAt";
+import PlayAt from "./SuperMemo/Components/Base/PlayAt";
+import { ComponentType } from "./SuperMemo/Components/Base/ComponentType";
 
 interface CompData {
   type: ComponentType;
   displayAt: DisplayAt;
+  height?: number;
+  width?: number;
 }
 
 export interface HtmlData extends CompData {

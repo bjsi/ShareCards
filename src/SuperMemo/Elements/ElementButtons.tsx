@@ -70,5 +70,5 @@ const createElementButtons = (props: IElementButtonsProps) => {
 };
 
 export const ElementButtons = (props: IElementButtonsProps) => {
-  return <>{createElementButtons(props)}</>;
+  return <span className="mb-2">{createElementButtons(props)}</span>;
 };

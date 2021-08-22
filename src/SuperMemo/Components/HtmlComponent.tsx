@@ -5,5 +5,11 @@ export interface IHtmlComponentProps extends IComponentProps {
 }
 
 export function HtmlComponent(props: IHtmlComponentProps): JSX.Element {
-  return <>{props.text}</>;
+  return (
+    <p
+      style={{ border: "1px solid grey", padding: "2px" }}
+      className="text-black-800 m-1">
+      {props.text}
+    </p>
+  );
 }

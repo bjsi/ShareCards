@@ -11,25 +11,48 @@ import {
   HtmlData,
   ImageData,
   SoundData,
-  Template,
-} from "../TestData";
+} from "../../TestData";
 
 const createComponentFromData = (
   data: SomeCompData,
   displayState: DisplayState,
 ): JSX.Element => {
+  const shouldDisplay = (data.displayAt & displayState) != 0;
+
   switch (data.type) {
     case ComponentType.Html:
+      // TODO: Size
       return (
-        <HtmlComponent {...(data as HtmlData)} displayState={displayState} />
+        <div>
+          {shouldDisplay && (
+            <HtmlComponent
+              {...(data as HtmlData)}
+              displayState={displayState}
+            />
+          )}
+        </div>
       );
     case ComponentType.Image:
       return (
-        <ImageComponent {...(data as ImageData)} displayState={displayState} />
+        <div>
+          {shouldDisplay && (
+            <ImageComponent
+              {...(data as ImageData)}
+              displayState={displayState}
+            />
+          )}
+        </div>
       );
     case ComponentType.Sound:
       return (
-        <SoundComponent {...(data as SoundData)} displayState={displayState} />
+        <div>
+          {shouldDisplay && (
+            <SoundComponent
+              {...(data as SoundData)}
+              displayState={displayState}
+            />
+          )}
+        </div>
       );
     default:
       throw new Error("Failed to create component: Unexpected ComponentType.");
@@ -50,11 +73,11 @@ function ItemPictureElement({
   return (
     <>
       <div className="grid grid-cols-2">
-        <div>{createComponentFromData(comps[0], displayState)}</div>
-        <div>{createComponentFromData(comps[1], displayState)}</div>
+        {createComponentFromData(comps[0], displayState)}
+        {createComponentFromData(comps[1], displayState)}
       </div>
       <div className="grid grid-cols-1">
-        <div>{createComponentFromData(comps[2], displayState)}</div>
+        {createComponentFromData(comps[2], displayState)}
       </div>
     </>
   );
@@ -69,13 +92,11 @@ function AudioClozeElement({
   return (
     <>
       <div className="grid grid-rows-3">
-        <div>{createComponentFromData(comps[0], displayState)}</div>
-
-        <div>{createComponentFromData(comps[1], displayState)}</div>
-
+        {createComponentFromData(comps[0], displayState)}
+        {createComponentFromData(comps[1], displayState)}
         <div className="grid grid-cols-2">
-          <div>{createComponentFromData(comps[2], displayState)}</div>
-          <div>{createComponentFromData(comps[3], displayState)}</div>
+          {createComponentFromData(comps[2], displayState)}
+          {createComponentFromData(comps[3], displayState)}
         </div>
       </div>
     </>
@@ -104,18 +125,10 @@ const ItemElement = ({ comps, displayState }: IElementProps): JSX.Element => {
   if (comps.length !== 2) throw new Error("Unexpected number of components");
 
   return (
-    <>
-      <div className="grid grid-rows-2">
-        <div>
-          {comps[0].displayAt & displayState &&
-            createComponentFromData(comps[0], displayState)}
-        </div>
-        <div>
-          {comps[1].displayAt & displayState &&
-            createComponentFromData(comps[1], displayState)}
-        </div>
-      </div>
-    </>
+    <div className="grid grid-rows-2 m-1">
+      {createComponentFromData(comps[0], displayState)}
+      {createComponentFromData(comps[1], displayState)}
+    </div>
   );
 };
 
@@ -155,12 +168,12 @@ const ElementContainer = ({ components, template }: ElementData) => {
   }
 
   return (
-    <>
+    <div className="max-w-sm rounded shadow-xl">
       <div>{element}</div>
-      <div>
+      <div className="py-4">
         <ElementButtons {...btnProps} />
       </div>
-    </>
+    </div>
   );
 };
 

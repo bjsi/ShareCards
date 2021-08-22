@@ -5,6 +5,6 @@ const Button = (
     R.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >,
-) => <button type="button" {...props}></button>;
+) => <button className="ml-1 mr-1" type="button" {...props}></button>;
 
 export default Button;
