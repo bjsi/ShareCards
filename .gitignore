@@ -2,6 +2,7 @@
 
 index.css
 tailwind.output.css
+.next
 
 # dependencies
 /node_modules

@@ -3,13 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "google",
-    "prettier",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:jest/recommended"
-  ],
+  "extends": ["google", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 12
@@ -18,9 +12,6 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
   "rules": {
     "no-console": "off",
     "new-cap": 0,
