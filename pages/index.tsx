@@ -1,4 +1,5 @@
 import { Footer } from "../components/footer";
+import { Layout } from "../components/layout";
 import Meta from "../components/seo-meta";
 import * as A from "fp-ts/lib/Array";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -14,6 +15,7 @@ import * as F from "fp-ts/lib/function";
 import * as R from "fp-ts/lib/Record";
 import { log } from "fp-ts/lib/Console";
 import { failure } from "io-ts/lib/PathReporter";
+import FlashcardDeck from "../components/deck";
 
 export interface HomeProps {
   decks: Deck[];
@@ -21,15 +23,14 @@ export interface HomeProps {
 
 export default function Home({ decks }: HomeProps) {
   return (
-    <div>
-      <Meta title="Home" desc={O.none} canonical="TODO" />
-      <Container>
-        <h1>Share Cards</h1>
+    <Layout meta={<Meta title="Home" desc={O.none} canonical="TODO" />}>
         <p>Share Cards is a flashcard sharing website for SuperMemo users.</p>
-        {decks.length > 0 ? <p>We have decks!</p> : <p>No decks :(</p>}
-      </Container>
-      <Footer />
-    </div>
+        {
+          decks.length === 0 
+            ? <p>No decks available. Check back later!</p>
+            : decks.map(deck => <FlashcardDeck key={`${deck.title} ${deck.author}`} deck={deck}/>)
+        }
+    </Layout>
   );
 }
 

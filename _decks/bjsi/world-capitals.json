@@ -1,0 +1,23 @@
+{
+  "title": "World Capitals",
+  "repository": "world-capitals",
+  "username": "bjsi",
+  "author": "Jamesb | Experimental Learning",
+  "description": "This is a deck containing questions about the world's capitals.",
+  "elements": [
+    { 
+      "comps": [
+        { "type": "html", "text": "What is the capital of England?", "showAt": 7 },
+        { "type": "html", "text": "London", "showAt": 6 }
+      ],
+      "template": "Item"
+    },
+    { 
+      "comps": [
+        { "type": "html", "text": "What is the capital of Spain?", "showAt": 7 },
+        { "type": "html", "text": "Madrid", "showAt": 6 }
+      ],
+      "template": "Item"
+    }
+  ]
+}
