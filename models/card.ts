@@ -1,41 +1,60 @@
 import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
 import { nonEmptyArray } from "io-ts-types/lib/nonEmptyArray";
-import { soundComponent, htmlComponent, imageComponent, question, answer } from './components';
-import { template } from './template';
+import {
+  soundComponent,
+  htmlComponent,
+  imageComponent,
+  question,
+  answer,
+} from "./components";
+import { template } from "./template";
 
-    // t.literal("Audio Cloze Item Picture"),
-    // t.literal("Audio Cloze Item"),
-    // t.literal("Item Picture"),
-    // t.literal("Item"),
-
-
+// t.literal("Audio Cloze Item Picture"),
+// t.literal("Audio Cloze Item"),
+// t.literal("Item Picture"),
+// t.literal("Item"),
 
 export const item = t.type({
   comps: t.tuple([question(htmlComponent), answer(htmlComponent)]),
   template: t.literal("Item"),
-})
+});
 
 export type Item = D.TypeOf<typeof item>;
 
 export const itemPicture = t.type({
-  components: t.tuple([question(htmlComponent), answer(htmlComponent), imageComponent]),
+  components: t.tuple([
+    question(htmlComponent),
+    answer(htmlComponent),
+    imageComponent,
+  ]),
   template: t.literal("Item Picture"),
-})
+});
 
 export type ItemPicture = D.TypeOf<typeof itemPicture>;
 
 export const audioCloze = t.type({
-  components: t.tuple([question(htmlComponent), answer(htmlComponent), question(soundComponent), answer(soundComponent)]),
+  components: t.tuple([
+    question(htmlComponent),
+    answer(htmlComponent),
+    question(soundComponent),
+    answer(soundComponent),
+  ]),
   template: t.literal("Audio Cloze Item"),
-})
+});
 
 export type AudioCloze = D.TypeOf<typeof audioCloze>;
 
 export const audioClozePicture = t.type({
-  components: t.tuple([question(htmlComponent), answer(htmlComponent), question(soundComponent), answer(soundComponent), imageComponent]),
+  components: t.tuple([
+    question(htmlComponent),
+    answer(htmlComponent),
+    question(soundComponent),
+    answer(soundComponent),
+    imageComponent,
+  ]),
   template: t.literal("Audio Cloze Item Picture"),
-})
+});
 
 export type AudioClozePicture = D.TypeOf<typeof audioClozePicture>;
 
@@ -54,6 +73,6 @@ export const element = t.union([
   itemPicture,
   audioCloze,
   audioClozePicture,
-])
+]);
 
 export type Element = D.TypeOf<typeof element>;

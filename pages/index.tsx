@@ -24,12 +24,14 @@ export interface HomeProps {
 export default function Home({ decks }: HomeProps) {
   return (
     <Layout meta={<Meta title="Home" desc={O.none} canonical="TODO" />}>
-        <p>Share Cards is a flashcard sharing website for SuperMemo users.</p>
-        {
-          decks.length === 0 
-            ? <p>No decks available. Check back later!</p>
-            : decks.map(deck => <FlashcardDeck key={`${deck.title} ${deck.author}`} deck={deck}/>)
-        }
+      <p>Share Cards is a flashcard sharing website for SuperMemo users.</p>
+      {decks.length === 0 ? (
+        <p>No decks available. Check back later!</p>
+      ) : (
+        decks.map(deck => (
+          <FlashcardDeck key={`${deck.title} ${deck.author}`} deck={deck} />
+        ))
+      )}
     </Layout>
   );
 }

@@ -1,2 +1,1 @@
-export default async function createIssue(req, res) {
-}
+export default async function createIssue(req, res) {}

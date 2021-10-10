@@ -12,14 +12,9 @@ export const enum ShowAt {
   All = ShowState.Question | ShowState.Browsing | ShowState.Grading,
 }
 
-
-const component =
-  t.type({
-    showAt: t.union([
-	t.literal(ShowAt.NonQuestion),
-	t.literal(ShowAt.All),
-    ]),
-  });
+const component = t.type({
+  showAt: t.union([t.literal(ShowAt.NonQuestion), t.literal(ShowAt.All)]),
+});
 
 export type Component = D.TypeOf<typeof component>;
 
@@ -27,19 +22,19 @@ export const htmlComponent = t.intersection([
   component,
   t.type({
     type: t.literal("html"),
-    text: t.string
-  })
-])
+    text: t.string,
+  }),
+]);
 
 export type HtmlComponent = D.TypeOf<typeof htmlComponent>;
 
 export const imageComponent = t.intersection([
-    component,
-    t.type({
+  component,
+  t.type({
     type: t.literal("image"),
     src: t.string,
-  })
-])
+  }),
+]);
 
 export type ImageComponent = D.TypeOf<typeof imageComponent>;
 
@@ -49,10 +44,14 @@ export const soundComponent = t.intersection([
     type: t.literal("sound"),
     text: t.string,
     src: t.string,
-  })
-])
+  }),
+]);
 export type SoundComponent = D.TypeOf<typeof soundComponent>;
 
-export const answer = (comp: typeof htmlComponent | typeof imageComponent | typeof soundComponent) => t.refinement(comp, c => c.showAt === ShowAt.NonQuestion);
+export const answer = (
+  comp: typeof htmlComponent | typeof imageComponent | typeof soundComponent,
+) => t.refinement(comp, c => c.showAt === ShowAt.NonQuestion);
 
-export const question = (comp: typeof htmlComponent | typeof imageComponent | typeof soundComponent) => t.refinement(comp, c => c.showAt === ShowAt.All); 
+export const question = (
+  comp: typeof htmlComponent | typeof imageComponent | typeof soundComponent,
+) => t.refinement(comp, c => c.showAt === ShowAt.All);

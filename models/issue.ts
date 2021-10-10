@@ -1,7 +1,7 @@
-import * as t from 'io-ts';
+import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
-import {reactions} from './reaction';
-import {githubUser} from './user';
+import { reactions } from "./reaction";
+import { githubUser } from "./user";
 
 // export const label = t.type({
 

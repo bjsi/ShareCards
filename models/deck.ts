@@ -3,7 +3,7 @@ import * as D from "io-ts/Decoder";
 import { optionFromNullable } from "io-ts-types/lib/optionFromNullable";
 import { nonEmptyArray } from "io-ts-types/lib/nonEmptyArray";
 import { NonEmptyString } from "io-ts-types/lib/NonEmptyString";
-import { element } from './card';
+import { element } from "./card";
 
 export const deck = t.type({
   title: NonEmptyString,
