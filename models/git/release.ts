@@ -6,7 +6,7 @@ export const asset = t.type({
   size: t.number,
   download_count: t.number,
   name: t.string,
-})
+});
 
 export const releaseData = t.type({
   name: t.string,

@@ -4,14 +4,17 @@ import ErrorPage from "next/error";
 import Meta from "../components/seo-meta";
 import * as T from "fp-ts/lib/Task";
 import * as F from "fp-ts/lib/function";
-import { getPublishedDecksByAuthor, getPublishedFilePathSegments } from "../lib/api";
+import {
+  getPublishedDecksByAuthor,
+  getPublishedFilePathSegments,
+} from "../lib/api";
 import { ParsedUrlQuery } from "querystring";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Layout } from "../components/layout";
 import FlashcardDeck from "../components/deck";
-import {PublishedDeck} from "../models/publishedDeck";
+import { PublishedDeck } from "../models/publishedDeck";
 import { decksBaseDir } from "../lib/filesystem";
-import {CardColumns} from '../components/card-column';
+import { CardColumns } from "../components/card-column";
 
 interface AuthorPageProps {
   author: string;
@@ -37,11 +40,11 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
           />
         }>
         <h1>{title}</h1>
-	<CardColumns>	
+        <CardColumns>
           {decks.map(deck => (
             <FlashcardDeck deck={deck} key={`${deck.author} ${deck.title}`} />
           ))}
-	</CardColumns>	
+        </CardColumns>
       </Layout>
     );
   }
@@ -50,19 +53,17 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   return F.pipe(
     getPublishedFilePathSegments(decksBaseDir),
-    A.map(({author}) => ({ params: {author} })),
+    A.map(({ author }) => ({ params: { author } })),
     params => ({ paths: params, fallback: false }),
   );
 };
 
 export const getStaticProps: GetStaticProps<AuthorPageProps, Params> =
   async context => {
-    return await F.pipe(
-      context?.params!,
-      ({ author }) =>
+    return await F.pipe(context?.params!, ({ author }) =>
       F.pipe(
         getPublishedDecksByAuthor(author),
-        T.map(decks => ({ props: { decks, author } }))
+        T.map(decks => ({ props: { decks, author } })),
       ),
     )();
   };

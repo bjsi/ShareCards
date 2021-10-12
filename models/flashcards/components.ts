@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
-import ShowAt from './enums/showAt';
+import ShowAt from "./enums/showAt";
 
 const component = t.type({
   showAt: t.union([t.literal(ShowAt.NonQuestion), t.literal(ShowAt.All)]),
@@ -38,12 +38,20 @@ export const soundComponent = t.intersection([
 ]);
 export type SoundComponent = D.TypeOf<typeof soundComponent>;
 
-export const answer = <T extends typeof htmlComponent | typeof imageComponent | typeof soundComponent>(
+export const answer = <
+  T extends
+    | typeof htmlComponent
+    | typeof imageComponent
+    | typeof soundComponent,
+>(
   comp: T,
 ): t.RefinementC<T> => t.refinement(comp, c => c.showAt === ShowAt.NonQuestion);
 
-
-
-export const question = <T extends typeof htmlComponent | typeof imageComponent | typeof soundComponent>(
+export const question = <
+  T extends
+    | typeof htmlComponent
+    | typeof imageComponent
+    | typeof soundComponent,
+>(
   comp: T,
 ): t.RefinementC<T> => t.refinement(comp, c => c.showAt === ShowAt.All);

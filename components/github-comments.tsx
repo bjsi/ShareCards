@@ -1,10 +1,6 @@
 import * as A from "fp-ts/lib/Array";
 import * as TE from "fp-ts/lib/TaskEither";
-import {
-  ListGroup,
-  Button,
-  Image
-} from "react-bootstrap";
+import { ListGroup, Button, Image } from "react-bootstrap";
 import * as T from "fp-ts/lib/Task";
 import * as F from "fp-ts/lib/function";
 import * as R from "react";
@@ -12,8 +8,8 @@ import { getIssues } from "../services/gitService";
 import { Issue } from "../models/git/issue";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { humanRelativeDate } from '../utils/dates';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { humanRelativeDate } from "../utils/dates";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface VoteButtonProps {
   type: "up" | "down";

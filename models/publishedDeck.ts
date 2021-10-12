@@ -1,13 +1,13 @@
-import { releaseData} from './git/release';
-import { repoData} from './git/repo';
-import {deckData} from './flashcards/deck';
+import { releaseData } from "./git/release";
+import { repoData } from "./git/repo";
+import { deckData } from "./flashcards/deck";
 import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
 
 export const publishedDeck = t.type({
   release: releaseData,
   repo: repoData,
-  deck: deckData
+  deck: deckData,
 });
 
 export type PublishedDeck = D.TypeOf<typeof publishedDeck>;

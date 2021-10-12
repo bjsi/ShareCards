@@ -2,10 +2,10 @@ import axios, { AxiosResponse } from "axios";
 import { Issue, issues } from "../models/git/issue";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as F from "fp-ts/lib/function";
-import {Repo, repoData} from '../models/git/repo';
-import {Release, releaseData} from '../models/git/release';
-import {deckData, Deck } from "../models/flashcards/deck";
-import {decodeWith} from '../utils/decoding';
+import { Repo, repoData } from "../models/git/repo";
+import { Release, releaseData } from "../models/git/release";
+import { deckData, Deck } from "../models/flashcards/deck";
+import { decodeWith } from "../utils/decoding";
 
 const gitClient = axios.create({
   baseURL: "https://api.github.com",
@@ -40,9 +40,9 @@ export const getRepo = (
   return F.pipe(
     get(`/repos/${user}/${repository}`),
     TE.map(resp => resp.data),
-    TE.chain(decodeWith(repoData))
-  )
-}
+    TE.chain(decodeWith(repoData)),
+  );
+};
 
 export const getLatestRelease = (
   user: string,
@@ -51,19 +51,19 @@ export const getLatestRelease = (
   return F.pipe(
     get(`/repos/${user}/${repo}/releases/latest`),
     TE.map(resp => resp.data),
-    TE.chain(decodeWith(releaseData))
-  )
-}
+    TE.chain(decodeWith(releaseData)),
+  );
+};
 
 export const downloadLatestRelease = (
-  url: string
+  url: string,
 ): TE.TaskEither<Error, Deck> => {
   return F.pipe(
     TE.tryCatch<Error, AxiosResponse>(
-    () => axios({ url: url, method: 'GET',}),
-    reason => new Error(String(reason)),
-  ),
+      () => axios({ url: url, method: "GET" }),
+      reason => new Error(String(reason)),
+    ),
     TE.map(resp => resp.data),
-    TE.chain(decodeWith(deckData))
-  )
-}
+    TE.chain(decodeWith(deckData)),
+  );
+};

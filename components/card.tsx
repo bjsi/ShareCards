@@ -1,7 +1,7 @@
 import { Card, Button } from "react-bootstrap";
 import * as models from "../models/flashcards/cards";
-import ShowAt from '../models/flashcards/enums/showAt';
-import ShowState from '../models/flashcards/enums/showState';
+import ShowAt from "../models/flashcards/enums/showAt";
+import ShowState from "../models/flashcards/enums/showState";
 import * as R from "react";
 
 interface ComponentProps {

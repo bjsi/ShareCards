@@ -4,8 +4,10 @@ import * as E from "fp-ts/lib/Either";
 
 export const jsonify = F.flow(
   J.stringify,
-  E.mapLeft(e => (e instanceof Error ? e : new Error("Failed to stringify JSON.")))
-)
+  E.mapLeft(e =>
+    e instanceof Error ? e : new Error("Failed to stringify JSON."),
+  ),
+);
 
 export const parseJSON = F.flow(
   J.parse,

@@ -11,7 +11,7 @@ export function Layout({ meta, children }: LayoutProps) {
   return (
     <>
       {meta}
-      <Container style={{maxWidth: "90ch"}}>
+      <Container style={{ maxWidth: "90ch" }}>
         <NavigationBar />
         <main>{children}</main>
         <Footer />
