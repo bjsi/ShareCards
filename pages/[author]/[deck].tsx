@@ -37,6 +37,10 @@ import { Repo } from "../../models/git/repo";
 import { Release } from "../../models/git/release";
 import { Deck } from "../../models/flashcards/deck";
 import { CardColumns } from "../../components/card-column";
+import Link from "next/link";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as FA from "@fortawesome/free-solid-svg-icons";
 
 interface DeckPageProps {
   Odeck: O.Option<PublishedDeck>;
@@ -56,13 +60,31 @@ export default function DeckPage({ Odeck }: DeckPageProps) {
       <Layout
         meta={<Meta title={deck.deck.title} desc={O.none} canonical="TODO" />}>
         <h1>{deck.deck.title}</h1>
-        <p>
-          There are {`${cards.length} card${cards.length === 1 ? "" : "s"}`}{" "}
-          available in this deck.
-        </p>
-        <p>
+        <div>
+          <FontAwesomeIcon size="sm" icon={FA.faUser} /> {deck.deck.author}
+        </div>
+        <div>
+          <FontAwesomeIcon size="sm" icon={FA.faStickyNote} />{" "}
+          {`${cards.length} card${cards.length === 1 ? "" : "s"}`}
+        </div>
+        <div>
           {desc.length === 0 ? "No description available for this deck." : desc}
-        </p>
+        </div>
+        <span>
+          <Link
+            href={`https://github.com/${deck.repo.owner.login}/${deck.repo.name}/releases/latest`}>
+            <Button variant="outline-primary">
+              <FontAwesomeIcon icon={FA.faDownload} /> Download
+            </Button>
+          </Link>
+        </span>{" "}
+        <span>
+          <Button variant="outline-primary">
+            <FontAwesomeIcon icon={FA.faStar} />
+          </Button>
+        </span>
+        <hr />
+        <h2>Cards</h2>
         <CardColumns>
           {cards.map((card, idx) => (
             <Flashcard key={idx} isPreview={false} data={card} />

@@ -29,20 +29,30 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
   if (decks.length === 0) {
     return <ErrorPage statusCode={404} />;
   } else {
-    const title = "Decks by " + decks[0].author;
+    const name = decks[0].deck.author;
+    const title = "Decks by " + name;
+    const totalStars = decks.reduce(
+      (acc, x) => x.repo.stargazers_count + acc,
+      0,
+    );
     return (
       <Layout
         meta={
           <Meta
             title={title}
-            desc={O.some("Flashcard decks created by " + author)}
+            desc={O.some("Flashcard decks created by " + name)}
             canonical="TODO"
           />
         }>
         <h1>{title}</h1>
+        <p>
+          {name} has shared {decks.length}{" "}
+          {`deck${decks.length === 1 ? "" : "s"}`} with {totalStars}{" "}
+          {`star${totalStars === 1 ? "" : "s"}`}.
+        </p>
         <CardColumns>
           {decks.map(deck => (
-            <FlashcardDeck deck={deck} key={`${deck.author} ${deck.title}`} />
+            <FlashcardDeck deck={deck} key={`${author} ${deck.repo.name}`} />
           ))}
         </CardColumns>
       </Layout>

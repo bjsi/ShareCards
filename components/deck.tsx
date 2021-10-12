@@ -48,7 +48,7 @@ export default function FlashcardDeck({ deck }: { deck: PublishedDeck }) {
           <span>
             <Link href={`/${deck.repo.owner.login}/${deck.repo.name}`}>
               <Button className="btn-sm" variant="outline-dark">
-                Browse
+                Show Cards
               </Button>
             </Link>
           </span>

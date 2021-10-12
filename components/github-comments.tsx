@@ -64,20 +64,24 @@ const GitHubIssue = ({ issue, user }: { user: UserProfile; issue: Issue }) => {
       {user && <GitHubIssueVoteButtons user={user} issue={issue} />}
       <p>
         <a href={issue.html_url}>
-          {comments} comment{comments === 1 ? "" : "s"}
+          {comments} repl{comments === 1 ? "y" : "ies"}
         </a>
       </p>
     </ListGroup.Item>
   );
 };
 
+interface GitHubCommentsProps {
+  username: string;
+  repo: string;
+  children?: R.ReactNode;
+}
+
 export const GitHubComments = ({
   username,
   repo,
-}: {
-  username: string;
-  repo: string;
-}) => {
+  children,
+}: GitHubCommentsProps) => {
   const [issues, setIssues] = R.useState<Issue[]>([]);
   const { user } = useUser();
   R.useEffect(() => {
@@ -96,19 +100,25 @@ export const GitHubComments = ({
 
   return (
     <>
-      <h2>Comments and Issues</h2>
+      <h2>Comments, Suggestions and Feedback</h2>
+      {children}
       {user ? (
-        <p>Welcome, {user.name}. Feel free to add a comment or vote.</p>
+        <span>Welcome, {user.name}. Feel free to add a comment or vote. </span>
       ) : (
-        <p>
+        <span>
           <a href="/api/auth/login">Sign in</a> using GitHub to add comments or
           vote.
-        </p>
+        </span>
       )}
-      <p>
-        You can also browse all of the comment threads and issues directly on
-        GitHub
-      </p>
+      <span>
+        You can also browse all of the comment threads and issues{" "}
+        <a href={`https://github.com/${username}/${repo}/issues`}>
+          directly on GitHub
+        </a>
+        .
+      </span>
+      <br />
+      <br />
       <ListGroup>
         {issues.map(issue => (
           <GitHubIssue user={user} issue={issue} key={issue.number} />
