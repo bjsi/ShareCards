@@ -1,30 +1,21 @@
 import * as O from "fp-ts/lib/Option";
+import * as A from "fp-ts/lib/Array";
 import ErrorPage from "next/error";
-import * as TE from "fp-ts/lib/TaskEither";
-import { Footer } from "../components/footer";
-import { Container } from "react-bootstrap";
 import Meta from "../components/seo-meta";
 import * as T from "fp-ts/lib/Task";
-import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
 import * as F from "fp-ts/lib/function";
-import { Deck } from "../models/deck";
-import { getDeckByName, getAllDeckPaths, getDecksByAuthor } from "../lib/api";
+import { getPublishedDecksByAuthor, getPublishedFilePathSegments } from "../lib/api";
 import { ParsedUrlQuery } from "querystring";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { log, warn } from "fp-ts/lib/Console";
-import * as IO from "fp-ts/lib/IO";
-import * as path from "path";
-import { decksDir } from "../lib/filesystem";
-import Link from "next/link";
-import * as R from "fp-ts/lib/Record";
-import { useEffect } from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { Layout } from "../components/layout";
 import FlashcardDeck from "../components/deck";
+import {PublishedDeck} from "../models/publishedDeck";
+import { decksBaseDir } from "../lib/filesystem";
+import {CardColumns} from '../components/card-column';
 
 interface AuthorPageProps {
   author: string;
-  decks: Deck[];
+  decks: PublishedDeck[];
 }
 
 interface Params extends ParsedUrlQuery {
@@ -46,11 +37,11 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
           />
         }>
         <h1>{title}</h1>
-        <ul>
+	<CardColumns>	
           {decks.map(deck => (
             <FlashcardDeck deck={deck} key={`${deck.author} ${deck.title}`} />
           ))}
-        </ul>
+	</CardColumns>	
       </Layout>
     );
   }
@@ -58,37 +49,20 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   return F.pipe(
-    getAllDeckPaths,
-    E.fold(
-      e => {
-        warn(e);
-        return { paths: [], fallback: false };
-      },
-      F.flow(
-        A.map(fp => path.relative(decksDir, fp).split("/")),
-        A.map(split => ({ params: { author: split[0], deck: split[1] } })),
-        params => ({ paths: params, fallback: false }),
-      ),
-    ),
+    getPublishedFilePathSegments(decksBaseDir),
+    A.map(({author}) => ({ params: {author} })),
+    params => ({ paths: params, fallback: false }),
   );
 };
 
 export const getStaticProps: GetStaticProps<AuthorPageProps, Params> =
   async context => {
-    return await F.pipe(context?.params!, ({ author }) =>
+    return await F.pipe(
+      context?.params!,
+      ({ author }) =>
       F.pipe(
-        author,
-        getDecksByAuthor,
-        TE.fold(
-          e => {
-            warn(e);
-            return T.of({ props: { decks: [], author } });
-          },
-          F.flow(
-            T.map(R.separate),
-            T.map(x => ({ props: { decks: Object.values(x.right), author } })),
-          ),
-        ),
+        getPublishedDecksByAuthor(author),
+        T.map(decks => ({ props: { decks, author } }))
       ),
     )();
   };

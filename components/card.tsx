@@ -1,18 +1,7 @@
-import { Container } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { Card, Button } from "react-bootstrap";
-import * as models from "../models/card";
-import {
-  ShowAt,
-  ShowState,
-  htmlComponent,
-  ImageComponent,
-  SoundComponent,
-} from "../models/components";
-import * as O from "fp-ts/lib/Option";
-import Link from "next/link";
-import { Template } from "../models/template";
+import * as models from "../models/flashcards/cards";
+import ShowAt from '../models/flashcards/enums/showAt';
+import ShowState from '../models/flashcards/enums/showState';
 import * as R from "react";
 
 interface ComponentProps {
@@ -36,9 +25,9 @@ interface HtmlCompProps extends ComponentProps {
   text: string;
 }
 
-interface ImageCompProps extends ComponentProps {
-  src: string;
-}
+// interface ImageCompProps extends ComponentProps {
+//   src: string;
+// }
 
 // const ImageComponent = ({showState, showAt, src}: ImageCompProps) => {
 //   return (

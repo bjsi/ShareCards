@@ -1,4 +1,5 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../styles/styles.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import type { AppProps } from "next/app";
 import { UserProvider } from "@auth0/nextjs-auth0";

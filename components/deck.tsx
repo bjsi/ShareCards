@@ -1,25 +1,18 @@
-import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCopyright,
-  faUser,
-  faStickyNote,
-} from "@fortawesome/free-solid-svg-icons";
-import { Card, Button, Carousel } from "react-bootstrap";
-import { Deck } from "../models/deck";
-import * as O from "fp-ts/lib/Option";
+import * as FA from "@fortawesome/free-solid-svg-icons";
+import { Card, Button, Carousel, Badge } from "react-bootstrap";
+import {PublishedDeck} from "../models/publishedDeck"
 import Link from "next/link";
 import Flashcard from "./card";
+import {humanRelativeDate} from '../utils/dates';
 
-interface FlashcardDeckProps {
-  deck: Deck;
-}
 
-export default function FlashcardDeck({ deck }: FlashcardDeckProps) {
-  const cards = deck.elements;
+export default function FlashcardDeck({ deck }: {deck: PublishedDeck}) {
+  const cards = deck.deck.elements;
+  const stars = deck.repo.stargazers_count;
   return (
     <>
-      <Card border="dark" className="m-2" style={{ width: "25rem" }}>
+      <Card border="dark" className="m-2">
         <Carousel fade>
           {cards.map((card, idx) => (
             <Carousel.Item key={idx} interval={7000}>
@@ -29,24 +22,40 @@ export default function FlashcardDeck({ deck }: FlashcardDeckProps) {
         </Carousel>
 
         <Card.Body>
-          <Card.Title>{deck.title}</Card.Title>
+          <Card.Title>{deck.deck.title}</Card.Title>
           <Card.Subtitle>
-            <FontAwesomeIcon icon={faUser} />{" "}
-            <Link href={`/${deck.username}`}>
-              <a>{deck.author}</a>
+            <FontAwesomeIcon size="sm" icon={FA.faUser} />{" "}
+            <Link href={`/${deck.repo.owner.login}`}>
+              <a>{deck.deck.author}</a>
             </Link>
             <br />
-            <FontAwesomeIcon icon={faStickyNote} />{" "}
+            <FontAwesomeIcon size="sm" icon={FA.faStickyNote} />{" "}
             {`${cards.length} card${cards.length === 1 ? "" : "s"}`}
+            <br/>
+            <FontAwesomeIcon size="sm" icon={FA.faStar}/> {`${stars} star${stars === 1 ? "" : "s"}`}
+            <br/>
+            <FontAwesomeIcon size="sm" icon={FA.faCalendar} /> Latest release {humanRelativeDate(deck.release.published_at)}
+            <br/>
+            
           </Card.Subtitle>
           <Card.Text>
-            {O.getOrElse(() => "No description available for this deck")(
-              deck.description,
-            )}
-          </Card.Text>
-          <Link href={`/${deck.username}/${deck.repository}`}>
-            <Button variant="outline-dark">Browse this deck</Button>
-          </Link>
+            <p>
+              {deck.repo.description.length === 0 ? "No description available for this deck" : deck.repo.description}
+            </p>
+          </Card.Text >
+            <span>
+              <Link href={`/${deck.repo.owner.login}/${deck.repo.name}`}>
+                <Button className="btn-sm" variant="outline-dark">Browse</Button>
+              </Link>
+            </span>
+            <span style={{float: "right"}}>
+              {
+                deck.repo.topics.map((tag, idx) =>
+                  <Badge key={idx} variant="success" className="m-1" >
+                  {tag}
+                </Badge >)
+              }
+            </span>
         </Card.Body>
       </Card>
     </>

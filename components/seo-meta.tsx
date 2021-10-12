@@ -1,6 +1,6 @@
 import Head from "next/head";
 import * as O from "fp-ts/lib/Option";
-import { MetaData } from "../lib/pageContent";
+import { MetaData } from "../models/pageContent";
 import { pipe } from "fp-ts/lib/function";
 
 interface MetaProps extends MetaData {
@@ -26,8 +26,8 @@ const Meta = (props: MetaProps) => {
       <meta name="twitter:description" content={desc} />
       <meta name="twitter:site" content="@experilearning" />
       <meta name="twitter:creator" content="@experilearning" />
-      <link rel="icon" type="image/png" href="/static/images/favicon.ico" />
-      <link rel="apple-touch-icon" href="/assets/images/favicon.ico" />
+      <link rel="icon" type="image/png" href="/favicon.ico" />
+      <link rel="apple-touch-icon" href="/favicon.ico" />
       {props.canonical && <link rel="canonical" href={`${props.canonical}`} />}
     </Head>
   );

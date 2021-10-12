@@ -1,9 +1,6 @@
 {
   "title": "World Capitals",
-  "repository": "world-capitals",
-  "username": "bjsi",
   "author": "Jamesb | Experimental Learning",
-  "description": "This is a deck containing questions about the world's capitals.",
   "elements": [
     {
       "comps": [

@@ -3,9 +3,11 @@ import * as D from "io-ts/Decoder";
 import { reactions } from "./reaction";
 import { githubUser } from "./user";
 
-// export const label = t.type({
-
-// });
+const label = t.type({
+  name: t.string,
+  description: t.string,
+  color: t.string,
+});
 
 export const issue = t.type({
   html_url: t.string,
@@ -18,8 +20,7 @@ export const issue = t.type({
   body: t.string,
   reactions: reactions,
   user: githubUser,
-  //labels: t.array(label),
-  //reactions
+  labels: t.array(label),
 });
 
 export const issues = t.array(issue);

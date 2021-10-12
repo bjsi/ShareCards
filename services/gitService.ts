@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { failure } from "io-ts/lib/PathReporter";
-import { Issue, issues } from "../models/issue";
+import { Issue, issues } from "../models/git/issue";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as E from "fp-ts/lib/Either";
 import * as F from "fp-ts/lib/function";
-import * as t from "io-ts";
+import {Repo, repoData} from '../models/git/repo';
+import {Release, releaseData} from '../models/git/release';
+import {deckData, Deck } from "../models/flashcards/deck";
+import {decodeWith} from '../utils/decoding';
 
 const gitClient = axios.create({
   baseURL: "https://api.github.com",
@@ -21,15 +22,6 @@ const get = (url: string): TE.TaskEither<Error, AxiosResponse> => {
   );
 };
 
-const decodeWith = <A>(decoder: t.Decoder<unknown, A>) =>
-  F.flow(
-    decoder.decode,
-    E.mapLeft(errors => new Error(failure(errors).join("\n"))),
-    TE.fromEither,
-  );
-
-// const post = <T>()
-
 export const getIssues = (
   user: string,
   repo: string,
@@ -40,3 +32,38 @@ export const getIssues = (
     TE.chain(decodeWith(issues)),
   );
 };
+
+export const getRepo = (
+  user: string,
+  repository: string,
+): TE.TaskEither<Error, Repo> => {
+  return F.pipe(
+    get(`/repos/${user}/${repository}`),
+    TE.map(resp => resp.data),
+    TE.chain(decodeWith(repoData))
+  )
+}
+
+export const getLatestRelease = (
+  user: string,
+  repo: string,
+): TE.TaskEither<Error, Release> => {
+  return F.pipe(
+    get(`/repos/${user}/${repo}/releases/latest`),
+    TE.map(resp => resp.data),
+    TE.chain(decodeWith(releaseData))
+  )
+}
+
+export const downloadLatestRelease = (
+  url: string
+): TE.TaskEither<Error, Deck> => {
+  return F.pipe(
+    TE.tryCatch<Error, AxiosResponse>(
+    () => axios({ url: url, method: 'GET',}),
+    reason => new Error(String(reason)),
+  ),
+    TE.map(resp => resp.data),
+    TE.chain(decodeWith(deckData))
+  )
+}

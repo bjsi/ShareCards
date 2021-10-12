@@ -1,6 +1,5 @@
 import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
-import { nonEmptyArray } from "io-ts-types/lib/nonEmptyArray";
 import {
   soundComponent,
   htmlComponent,
@@ -8,12 +7,6 @@ import {
   question,
   answer,
 } from "./components";
-import { template } from "./template";
-
-// t.literal("Audio Cloze Item Picture"),
-// t.literal("Audio Cloze Item"),
-// t.literal("Item Picture"),
-// t.literal("Item"),
 
 export const item = t.type({
   comps: t.tuple([question(htmlComponent), answer(htmlComponent)]),

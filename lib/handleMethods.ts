@@ -1,5 +1,4 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import * as E from "fp-ts/lib/Either";
 
 export type ApiResponse<Data = {}, Error = { message: string }> =
   | { result: true; data: Data }

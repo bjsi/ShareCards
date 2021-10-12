@@ -1,6 +1,6 @@
 import { getIssues } from "../../services/gitService";
-import { Issue } from "../../models/issue";
-import { handleMethods, ApiResponse } from "../../lib/handleMethods";
+import { Issue } from "../../models/git/issue";
+import { handleMethods } from "../../lib/handleMethods";
 import * as F from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as T from "fp-ts/lib/Task";
