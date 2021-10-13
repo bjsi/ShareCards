@@ -51,15 +51,15 @@ export const audioClozePicture = t.type({
 
 export type AudioClozePicture = D.TypeOf<typeof audioClozePicture>;
 
-// TODO: more general case
-// export const element = t.type({
-//   components: nonEmptyArray(t.union([
-// 	  htmlComponent,
-// 	  soundComponent,
-// 	  imageComponent
-//   ])),
-//   template: template,
-// });
+////TODO: more general case
+//export const element = t.type({
+//  components: nonEmptyArray(t.union([
+//	  htmlComponent,
+//	  soundComponent,
+//	  imageComponent
+//  ])),
+//  template: template,
+//});
 
 export const element = t.union([
   item,

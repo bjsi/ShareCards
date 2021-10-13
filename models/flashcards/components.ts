@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 import * as D from "io-ts/Decoder";
-import ShowAt from "./enums/showAt";
+import { ShowAt } from "./enums/showAt";
 
 const component = t.type({
   showAt: t.union([t.literal(ShowAt.NonQuestion), t.literal(ShowAt.All)]),

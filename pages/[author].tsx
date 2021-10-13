@@ -11,10 +11,10 @@ import {
 import { ParsedUrlQuery } from "querystring";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Layout } from "../components/layout";
-import FlashcardDeck from "../components/deck";
 import { PublishedDeck } from "../models/publishedDeck";
 import { decksBaseDir } from "../lib/filesystem";
-import { CardColumns } from "../components/card-column";
+import {FilterableTiledDecks} from '../components/filterable-decks';
+import { Image } from 'react-bootstrap';
 
 interface AuthorPageProps {
   author: string;
@@ -30,7 +30,8 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
     return <ErrorPage statusCode={404} />;
   } else {
     const name = decks[0].deck.author;
-    const title = "Decks by " + name;
+    const title = name;
+    const author = decks[0].repo.owner;
     const totalStars = decks.reduce(
       (acc, x) => x.repo.stargazers_count + acc,
       0,
@@ -40,21 +41,25 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
         meta={
           <Meta
             title={title}
-            desc={O.some("Flashcard decks created by " + name)}
+            desc={O.some(title)}
             canonical="TODO"
           />
         }>
+      <Image
+	style={{float: "left"}}
+	className="m-2"
+	width="65px"
+	height="65px"
+	roundedCircle
+	src={author.avatar_url}
+      />
         <h1>{title}</h1>
         <p>
           {name} has shared {decks.length}{" "}
           {`deck${decks.length === 1 ? "" : "s"}`} with {totalStars}{" "}
           {`star${totalStars === 1 ? "" : "s"}`}.
         </p>
-        <CardColumns>
-          {decks.map(deck => (
-            <FlashcardDeck deck={deck} key={`${author} ${deck.repo.name}`} />
-          ))}
-        </CardColumns>
+	<FilterableTiledDecks data={decks}/>
       </Layout>
     );
   }

@@ -3,6 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import * as path from "path";
 import { promises as fs } from "fs";
 import * as fsSync from "fs";
+import * as F from 'fp-ts/lib/function';
+import { jsonify } from "./json";
 
 export const applicationBaseDir = process.cwd();
 export const decksBaseDir = path.join(applicationBaseDir, "_decks");
@@ -35,11 +37,7 @@ export const readDir = (dir: string): TE.TaskEither<Error, string[]> => {
 };
 
 export const makeDir = (dir: string): TE.TaskEither<Error, void> => {
-  return TE.tryCatch(() => {
-    if (!fsSync.existsSync(dir)) {
-      return fs.mkdir(dir, { recursive: true });
-    }
-  }, E.toError);
+  return TE.tryCatch(() => fs.mkdir(dir, { recursive: true }), E.toError);
 };
 
 export const writeFile = (
@@ -49,5 +47,13 @@ export const writeFile = (
   return TE.tryCatch(
     () => fs.writeFile(file, content, { encoding: "utf8" }),
     E.toError,
+  );
+};
+
+export const writeJson = (fp: string, obj: any) => {
+  return F.pipe(
+    jsonify(obj),
+    TE.fromEither,
+    TE.chain(json => writeFile(fp, json)),
   );
 };

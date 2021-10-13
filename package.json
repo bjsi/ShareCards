@@ -45,7 +45,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "predev": "ts-node-transpile-only --project ./node.tsconfig.json update-decks.ts",
     "dev": "next dev",
+    "prebuild": "ts-node-transpile-only --project ./node.tsconfig.json update-decks.ts",
     "build": "next build",
     "start": "next start"
   },
