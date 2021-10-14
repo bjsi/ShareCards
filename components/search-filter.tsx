@@ -1,10 +1,10 @@
 import { debounce } from "ts-debounce";
 import * as R from "react";
 import * as F from "fp-ts/lib/function";
-import { Form } from "react-bootstrap";
+import * as B from "react-bootstrap";
 import { PublishedDeck } from "../models/publishedDeck";
-import { Element } from '../models/flashcards/cards';
-import { HtmlComponent } from "../models/flashcards/components";
+import { Element } from "../models/flashcards/cards";
+import { HtmlComponentData } from "../models/flashcards/components";
 
 interface ListDataFilterComponentProps<T> {
   data: T[];
@@ -20,11 +20,13 @@ export function WithSearchFiltering<T>(
     const filteredData = filter(input, data);
     return (
       <>
-        <Form.Control className="m-1"
-          onChange={({ target: { value } }) => handleInput(value)}
-          type="text"
-          placeholder="Search..."
-        />
+        <B.InputGroup className="m-1">
+          <B.InputGroup.Text>Search:</B.InputGroup.Text>
+          <B.Form.Control
+            onChange={({ target: { value } }) => handleInput(value)}
+            type="text"
+          />
+        </B.InputGroup>
         <Child data={filteredData} />
       </>
     );
@@ -33,7 +35,7 @@ export function WithSearchFiltering<T>(
 
 // Utilites
 const matches = (searchTerm: string, target: string) =>
-    target.toLowerCase().startsWith(searchTerm.toLowerCase());
+  target.toLowerCase().startsWith(searchTerm.toLowerCase());
 
 export const searchFilterDecks = (input: string, decks: PublishedDeck[]) => {
   const inputMatches = (target: string) => matches(input, target);
@@ -47,10 +49,11 @@ export const searchFilterDecks = (input: string, decks: PublishedDeck[]) => {
   });
 };
 
-// TODO:
-// export const searchFilterCards = (input: string, card: Element) => {
-//   const inputMatches = (target: string): boolean => matches(input, target);
-//   return card.components
-// 	     .filter(comp => comp.type === "html")
-// 	     .some((comp) => inputMatches((comp as HtmlComponent).text))
-// }
+export const searchFilterCards = (input: string, cards: Element[]) => {
+  const inputMatches = (target: string): boolean => matches(input, target);
+  return cards.filter(card =>
+    card.comps
+      .filter(comp => comp.type === "html")
+      .some(comp => inputMatches((comp as HtmlComponentData).text)),
+  );
+};

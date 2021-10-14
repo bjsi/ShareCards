@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as FA from "@fortawesome/free-solid-svg-icons";
-import { Card, Button, Carousel, Badge } from "react-bootstrap";
+import { Card, Button, Carousel } from "react-bootstrap";
 import { PublishedDeck } from "../models/publishedDeck";
 import Link from "next/link";
 import Flashcard from "./card";
@@ -54,9 +54,14 @@ export default function FlashcardDeck({ deck }: { deck: PublishedDeck }) {
           </span>
           <span style={{ float: "right" }}>
             {deck.repo.topics.map((tag, idx) => (
-              <Badge key={idx} variant="success" className="m-1">
-                {tag}
-              </Badge>
+              <Link href={`/tag/${tag}`}>
+                <Button
+                  key={idx}
+                  variant="outline-primary"
+                  className="m-1 btn-sm">
+                  {tag}
+                </Button>
+              </Link>
             ))}
           </span>
         </Card.Body>

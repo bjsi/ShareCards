@@ -1,6 +1,6 @@
-import * as R from 'react';
-import { Button } from 'react-bootstrap';
-import { PublishedDeck } from '../models/publishedDeck';
+import * as R from "react";
+import * as B from "react-bootstrap";
+import { PublishedDeck } from "../models/publishedDeck";
 
 interface ListDataFilterComponentProps<T> {
   data: T[];
@@ -25,12 +25,12 @@ function ToggleFilterButton({
     );
   };
   return (
-    <Button
+    <B.Button
       onClick={() => handleClick()}
       className="btn-sm m-1"
       variant={`${activeToggles.has(text) ? "" : "outline-"}primary`}>
       {text}
-    </Button>
+    </B.Button>
   );
 }
 
@@ -42,15 +42,16 @@ export function WithToggleButtonFiltering<T>(
   return function ({ data }: ListDataFilterComponentProps<T>) {
     const toggles = getToggles(data);
     const [activeToggles, setActiveToggles] = R.useState(toggles);
-    const filteredData = data.filter(x => predicate(activeToggles, x))
+    const filteredData = data.filter(x => predicate(activeToggles, x));
 
     return (
       <>
+        <span className="mx-1">Tags: </span>
         {Array.from(toggles).map(toggle => (
-          <ToggleFilterButton 
+          <ToggleFilterButton
             setActiveToggles={setActiveToggles}
             activeToggles={activeToggles}
-           text={toggle}
+            text={toggle}
             key={toggle}
           />
         ))}
@@ -62,6 +63,9 @@ export function WithToggleButtonFiltering<T>(
 
 // Utilities
 
-export const toggleFilterDecks = (toggles: Set<String>, deck: PublishedDeck) => {
+export const toggleFilterDecks = (
+  toggles: Set<String>,
+  deck: PublishedDeck,
+) => {
   return deck.repo.topics.some(topic => toggles.has(topic));
 };

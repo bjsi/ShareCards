@@ -21,6 +21,8 @@ import Link from "next/link";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as FA from "@fortawesome/free-solid-svg-icons";
+import { humanRelativeDate } from "../../utils/dates";
+import { FilterableTiledCards } from "../../components/filterable-cards";
 
 interface DeckPageProps {
   mdeck: O.Option<PublishedDeck>;
@@ -36,6 +38,7 @@ export default function DeckPage({ mdeck }: DeckPageProps) {
     const cards = deck.deck.elements;
     const desc = deck.repo.description;
     const repo = deck.repo;
+    const release = deck.release;
     return (
       <Layout
         meta={<Meta title={deck.deck.title} desc={O.none} canonical="TODO" />}>
@@ -48,28 +51,28 @@ export default function DeckPage({ mdeck }: DeckPageProps) {
           {`${cards.length} card${cards.length === 1 ? "" : "s"}`}
         </div>
         <div>
+          <FontAwesomeIcon size="sm" icon={FA.faCalendar} /> Last release{" "}
+          {humanRelativeDate(release.published_at)}
+        </div>
+        <div>
           {desc.length === 0 ? "No description available for this deck." : desc}
         </div>
         <span>
           <Link
             href={`https://github.com/${deck.repo.owner.login}/${deck.repo.name}/releases/latest`}>
-            <Button variant="outline-primary">
+            <Button className="btn-sm" variant="outline-primary">
               <FontAwesomeIcon icon={FA.faDownload} /> Download
             </Button>
           </Link>
         </span>{" "}
         <span>
-          <Button variant="outline-primary">
+          <Button className="btn-sm" variant="outline-primary">
             <FontAwesomeIcon icon={FA.faStar} />
           </Button>
         </span>
         <hr />
         <h2>Cards</h2>
-        <CardColumns>
-          {cards.map((card, idx) => (
-            <Flashcard key={idx} isPreview={false} data={card} />
-          ))}
-        </CardColumns>
+        <FilterableTiledCards data={cards} />
         <hr />
         <GitHubComments username={repo.owner.login} repo={repo.name} />
       </Layout>

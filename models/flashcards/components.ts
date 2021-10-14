@@ -6,7 +6,7 @@ const component = t.type({
   showAt: t.union([t.literal(ShowAt.NonQuestion), t.literal(ShowAt.All)]),
 });
 
-export type Component = D.TypeOf<typeof component>;
+export type ComponentData = D.TypeOf<typeof component>;
 
 export const htmlComponent = t.intersection([
   component,
@@ -16,7 +16,7 @@ export const htmlComponent = t.intersection([
   }),
 ]);
 
-export type HtmlComponent = D.TypeOf<typeof htmlComponent>;
+export type HtmlComponentData = D.TypeOf<typeof htmlComponent>;
 
 export const imageComponent = t.intersection([
   component,
@@ -26,7 +26,7 @@ export const imageComponent = t.intersection([
   }),
 ]);
 
-export type ImageComponent = D.TypeOf<typeof imageComponent>;
+export type ImageComponentData = D.TypeOf<typeof imageComponent>;
 
 export const soundComponent = t.intersection([
   component,
@@ -36,7 +36,7 @@ export const soundComponent = t.intersection([
     src: t.string,
   }),
 ]);
-export type SoundComponent = D.TypeOf<typeof soundComponent>;
+export type SoundComponentData = D.TypeOf<typeof soundComponent>;
 
 export const answer = <
   T extends

@@ -26,6 +26,7 @@ import { repoData } from "../models/git/repo";
 import { decodeWith } from "../utils/decoding";
 import { parseJSON } from "./json";
 import { log } from "fp-ts/lib/Console";
+import { byStars, desc } from "../utils/sorting";
 
 export interface DeckPathSegment {
   author: string;
@@ -133,11 +134,12 @@ const readPublishedDecks = (
  * Gets all available published decks in parallel. Any IO error or attempt to decode
  * an invalid deck will be logged and the deck in question will be excluded from the final list.
  */
-export const getAllPublisedDecks = (): T.Task<PublishedDeck[]> => {
+//
+export const getAllPublishedDecks = (): T.Task<PublishedDeck[]> => {
   return F.pipe(
     getPublishedFilePathSegments(decksBaseDir),
     readPublishedDecks,
-    T.chainFirstIOK(log),
+    T.map(A.sortBy([byStars(desc)])),
   );
 };
 

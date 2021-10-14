@@ -1,9 +1,9 @@
 {
-  "url": "https://api.github.com/repos/bjsi/world-capitals/releases/51300258",
-  "assets_url": "https://api.github.com/repos/bjsi/world-capitals/releases/51300258/assets",
-  "upload_url": "https://uploads.github.com/repos/bjsi/world-capitals/releases/51300258/assets{?name,label}",
-  "html_url": "https://github.com/bjsi/world-capitals/releases/tag/0.2",
-  "id": 51300258,
+  "url": "https://api.github.com/repos/bjsi/pleasure-of-learning/releases/51302267",
+  "assets_url": "https://api.github.com/repos/bjsi/pleasure-of-learning/releases/51302267/assets",
+  "upload_url": "https://uploads.github.com/repos/bjsi/pleasure-of-learning/releases/51302267/assets{?name,label}",
+  "html_url": "https://github.com/bjsi/pleasure-of-learning/releases/tag/0.1",
+  "id": 51302267,
   "author": {
     "login": "bjsi",
     "id": 58147075,
@@ -24,19 +24,19 @@
     "type": "User",
     "site_admin": false
   },
-  "node_id": "RE_kwDOGMEAec4DDsei",
-  "tag_name": "0.2",
+  "node_id": "RE_kwDOGNhNjc4DDs97",
+  "tag_name": "0.1",
   "target_commitish": "main",
-  "name": "Another test release",
+  "name": "First release",
   "draft": false,
   "prerelease": false,
-  "created_at": "2021-10-13T17:32:55Z",
-  "published_at": "2021-10-13T16:37:14Z",
+  "created_at": "2021-10-13T18:02:49Z",
+  "published_at": "2021-10-13T17:06:04Z",
   "assets": [
     {
-      "url": "https://api.github.com/repos/bjsi/world-capitals/releases/assets/46899655",
-      "id": 46899655,
-      "node_id": "RA_kwDOGMEAec4Cy6HH",
+      "url": "https://api.github.com/repos/bjsi/pleasure-of-learning/releases/assets/46902407",
+      "id": 46902407,
+      "node_id": "RA_kwDOGNhNjc4Cy6yH",
       "name": "deck.json",
       "label": null,
       "uploader": {
@@ -61,14 +61,14 @@
       },
       "content_type": "application/json",
       "state": "uploaded",
-      "size": 1213,
-      "download_count": 8,
-      "created_at": "2021-10-13T16:37:00Z",
-      "updated_at": "2021-10-13T16:37:00Z",
-      "browser_download_url": "https://github.com/bjsi/world-capitals/releases/download/0.2/deck.json"
+      "size": 1170,
+      "download_count": 4,
+      "created_at": "2021-10-13T17:21:05Z",
+      "updated_at": "2021-10-13T17:21:06Z",
+      "browser_download_url": "https://github.com/bjsi/pleasure-of-learning/releases/download/0.1/deck.json"
     }
   ],
-  "tarball_url": "https://api.github.com/repos/bjsi/world-capitals/tarball/0.2",
-  "zipball_url": "https://api.github.com/repos/bjsi/world-capitals/zipball/0.2",
-  "body": "Added a few more cards."
+  "tarball_url": "https://api.github.com/repos/bjsi/pleasure-of-learning/tarball/0.1",
+  "zipball_url": "https://api.github.com/repos/bjsi/pleasure-of-learning/zipball/0.1",
+  "body": "Added a couple of cards."
 }

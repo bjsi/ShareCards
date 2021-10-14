@@ -2,15 +2,15 @@ import { Layout } from "../components/layout";
 import Meta from "../components/seo-meta";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
-import { getAllPublisedDecks } from "../lib/api";
+import { getAllPublishedDecks } from "../lib/api";
 import { GetStaticProps } from "next";
 import * as F from "fp-ts/lib/function";
 import { PublishedDeck } from "../models/publishedDeck";
-import { Card, ListGroup, Image } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import { GitHubComments } from "../components/github-comments";
 import Link from "next/link";
-import {uniqueByKey} from '../utils/filtering';
-import {FilterableTiledDecks} from '../components/filterable-decks';
+import { uniqueByKey } from "../utils/filtering";
+import { FilterableTiledDecks } from "../components/filterable-decks";
 
 export interface HomeProps {
   decks: PublishedDeck[];
@@ -43,25 +43,34 @@ export default function Home({ decks }: HomeProps) {
         </Link>
         .
       </p>
-      <Card>
-        <ListGroup horizontal>
-          {uniqueAuthors.map((author, idx) => (
-            <ListGroup.Item style={{ justifyContent: "center" }} key={idx}>
+      {uniqueAuthors.map((author, idx) => (
+        <>
+          <Link href={`/${author.login}`}>
+            <a>
               <Image
-                className="m-2"
+                key={idx}
+                className="mx-1"
                 width="45px"
                 height="45px"
                 roundedCircle
+                alt={`${author.name} avatar`}
                 src={author.avatar_url}
               />
-              <small>{author.name}</small>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Card>
+            </a>
+          </Link>
+          <div className="mx-1" style={{ width: "45px", textAlign: "center" }}>
+            <Link href={`/${author.login}`}>
+              <a>{author.login}</a>
+            </Link>
+          </div>
+        </>
+      ))}
 
       <h2>Decks</h2>
-      <p>Browse some of the community's most popular decks by using tags or search...</p>
+      <p>
+        Browse some of the community's most popular decks by using tags or
+        search...
+      </p>
 
       {decks.length === 0 ? (
         <p>No decks available. Check back later!</p>
@@ -83,7 +92,7 @@ export default function Home({ decks }: HomeProps) {
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   return await F.pipe(
-    getAllPublisedDecks(),
+    getAllPublishedDecks(),
     T.map(results => ({ props: { decks: results } })),
   )();
 };

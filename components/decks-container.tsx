@@ -1,4 +1,4 @@
-import {PublishedDeck} from '../models/publishedDeck';
+import { PublishedDeck } from "../models/publishedDeck";
 import { CardColumns } from "../components/card-column";
 import FlashcardDeck from "../components/deck";
 

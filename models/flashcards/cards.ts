@@ -16,7 +16,7 @@ export const item = t.type({
 export type Item = D.TypeOf<typeof item>;
 
 export const itemPicture = t.type({
-  components: t.tuple([
+  comps: t.tuple([
     question(htmlComponent),
     answer(htmlComponent),
     imageComponent,
@@ -27,7 +27,7 @@ export const itemPicture = t.type({
 export type ItemPicture = D.TypeOf<typeof itemPicture>;
 
 export const audioCloze = t.type({
-  components: t.tuple([
+  comps: t.tuple([
     question(htmlComponent),
     answer(htmlComponent),
     question(soundComponent),
@@ -39,7 +39,7 @@ export const audioCloze = t.type({
 export type AudioCloze = D.TypeOf<typeof audioCloze>;
 
 export const audioClozePicture = t.type({
-  components: t.tuple([
+  comps: t.tuple([
     question(htmlComponent),
     answer(htmlComponent),
     question(soundComponent),

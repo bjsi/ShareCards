@@ -3,11 +3,12 @@ import * as E from "fp-ts/lib/Either";
 import * as path from "path";
 import { promises as fs } from "fs";
 import * as fsSync from "fs";
-import * as F from 'fp-ts/lib/function';
+import * as F from "fp-ts/lib/function";
 import { jsonify } from "./json";
 
 export const applicationBaseDir = process.cwd();
 export const decksBaseDir = path.join(applicationBaseDir, "_decks");
+export const postsBaseDir = path.join(applicationBaseDir, "_posts");
 export const communityDeckList = path.join(
   applicationBaseDir,
   "community-decks.json",
@@ -17,6 +18,7 @@ export const repoFileName = "repo.json";
 export const deckFileName = "deck.json";
 export const releaseFileName = "release.json";
 
+export const fullPostPath = (post: string) => path.join(postsBaseDir, post);
 export const fullDeckBasePath = (author: string, repo: string) =>
   path.join(decksBaseDir, author, repo);
 export const fullAuthorBasePath = (author: string) =>

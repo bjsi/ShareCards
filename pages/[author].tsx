@@ -13,8 +13,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Layout } from "../components/layout";
 import { PublishedDeck } from "../models/publishedDeck";
 import { decksBaseDir } from "../lib/filesystem";
-import {FilterableTiledDecks} from '../components/filterable-decks';
-import { Image } from 'react-bootstrap';
+import { FilterableTiledDecks } from "../components/filterable-decks";
+import { Image } from "react-bootstrap";
 
 interface AuthorPageProps {
   author: string;
@@ -38,28 +38,22 @@ export default function AuthorPage({ author, decks }: AuthorPageProps) {
     );
     return (
       <Layout
-        meta={
-          <Meta
-            title={title}
-            desc={O.some(title)}
-            canonical="TODO"
-          />
-        }>
-      <Image
-	style={{float: "left"}}
-	className="m-2"
-	width="65px"
-	height="65px"
-	roundedCircle
-	src={author.avatar_url}
-      />
+        meta={<Meta title={title} desc={O.some(title)} canonical="TODO" />}>
+        <Image
+          style={{ float: "left" }}
+          className="m-2"
+          width="65px"
+          height="65px"
+          roundedCircle
+          src={author.avatar_url}
+        />
         <h1>{title}</h1>
         <p>
           {name} has shared {decks.length}{" "}
-          {`deck${decks.length === 1 ? "" : "s"}`} with {totalStars}{" "}
-          {`star${totalStars === 1 ? "" : "s"}`}.
+          {`deck${decks.length === 1 ? "" : "s"}`} which received a total of{" "}
+          {totalStars} {`star${totalStars === 1 ? "" : "s"}`}.
         </p>
-	<FilterableTiledDecks data={decks}/>
+        <FilterableTiledDecks data={decks} />
       </Layout>
     );
   }
